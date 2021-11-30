@@ -1,4 +1,4 @@
-package adventofcode.parser
+package com.jaketschwartz.adventofcode.parser
 
 import java.time.LocalDate
 
@@ -22,8 +22,8 @@ class AdventFileParser(year: Int, day: Int, targetDirectory: String = DEFAULT_TA
     }
 
     init {
-        check(year in MIN_YEAR_ALLOWED..LocalDate.now().year) { "Advent of Code problems are available starting in $MIN_YEAR_ALLOWED until now... you fuck" }
-        check(day in MIN_DAY_ALLOWED..MAX_DAY_ALLOWED) { "Advent of Code only runs from the first of the month until Christmas... Get it together, you bitch" }
+        check(year in MIN_YEAR_ALLOWED..LocalDate.now().year) { "Advent of Code problems are available starting in $MIN_YEAR_ALLOWED until now" }
+        check(day in MIN_DAY_ALLOWED..MAX_DAY_ALLOWED) { "Advent of Code only runs from the first of the month until Christmas... Get it together" }
     }
 
     private val fileName = "$targetDirectory/$year-${day.toString().padStart(length = 2, padChar = '0')}.txt"

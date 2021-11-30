@@ -1,7 +1,7 @@
-package adventofcode.parser
+package com.jaketschwartz.adventofcode.parser
 
-import adventofcode.extensions.secondOrNull
-import adventofcode.extensions.thirdOrNull
+import com.jaketschwartz.adventofcode.extensions.secondOrNull
+import com.jaketschwartz.adventofcode.extensions.thirdOrNull
 import org.junit.Test
 import java.time.LocalDate
 import kotlin.test.assertEquals

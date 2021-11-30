@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "adventofcode"
-include("app")
+include("core")
