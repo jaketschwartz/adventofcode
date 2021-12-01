@@ -2,7 +2,7 @@ package com.jaketschwartz.adventofcode.challenges
 
 import com.jaketschwartz.adventofcode.parser.AdventFileParser
 
-interface Challenge<T, U> {
+interface Challenge {
     val year: Int
     val day: Int
 

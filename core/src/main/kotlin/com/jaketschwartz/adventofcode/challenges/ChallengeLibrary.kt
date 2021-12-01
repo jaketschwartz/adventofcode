@@ -1,10 +1,13 @@
 package com.jaketschwartz.adventofcode.challenges
 
+import com.jaketschwartz.adventofcode.challenges.c2021.Challenge202101
 import com.jaketschwartz.adventofcode.extensions.padSingleDigit
 
 object ChallengeLibrary {
     // TODO: maybe scan the classpath for all challenges that are coded and just automagically add them.  Maybe with annotation scanning?
-    private val challengeMap: Map<ChallengeKey, Challenge<*, *>> = mapOf()
+    private val challengeMap: Map<ChallengeKey, Challenge> = mapOf(
+       2021 challenge 1 to Challenge202101()
+    )
 
     fun executeChallenge(year: Int, day: Int, executionType: ChallengeExecutionType) {
         val challenge = challengeMap[ChallengeKey(year, day)]
@@ -27,3 +30,5 @@ enum class ChallengeExecutionType {
     SECOND,
     BOTH
 }
+
+private infix fun Int.challenge(day: Int): ChallengeKey = ChallengeKey(year = this, day = day)
