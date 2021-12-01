@@ -13,8 +13,8 @@ object ChallengeLibrary {
         val challenge = challengeMap[ChallengeKey(year, day)]
             ?: throw IllegalStateException("The challenge for $year/$${day.padSingleDigit()} has not yet been coded")
 
-        val firstResult = { println("Result for the first challenge for ${challenge.challengeName}: ${challenge.partOne(challenge.parser.getPartOneLines())}") }
-        val secondResult = { println("Result for the second challenge for ${challenge.challengeName}: ${challenge.partTwo(challenge.parser.getPartTwoLines())}") }
+        val firstResult = { println("Result for the first challenge for ${challenge.challengeName}: ${challenge.partOne(challenge.parser.lines)}") }
+        val secondResult = { println("Result for the second challenge for ${challenge.challengeName}: ${challenge.partTwo(challenge.parser.lines)}") }
         when (executionType) {
             ChallengeExecutionType.FIRST -> firstResult()
             ChallengeExecutionType.SECOND -> secondResult()

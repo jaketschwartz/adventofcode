@@ -18,7 +18,7 @@ class AdventFileParser(
     year: Int,
     day: Int,
     targetDirectory: String = DEFAULT_TARGET_DIRECTORY,
-    private val fileExtension: String = DEFAULT_FILE_EXTENSION,
+    fileExtension: String = DEFAULT_FILE_EXTENSION,
 ) {
     companion object {
         const val MIN_DAY_ALLOWED: Int = 1
@@ -33,12 +33,8 @@ class AdventFileParser(
         check(day in MIN_DAY_ALLOWED..MAX_DAY_ALLOWED) { "Advent of Code only runs from the first of the month until Christmas... Get it together" }
     }
 
-    private val classLoader: ClassLoader = this::class.java.classLoader
-    private val fileNamePrefix = "$targetDirectory/$year-${day.padSingleDigit()}"
+    private val fileName = "$targetDirectory/$year-${day.padSingleDigit()}$fileExtension"
 
-    fun getPartOneLines(): List<String> = loadFileLines("$fileNamePrefix-p1$fileExtension")
-    fun getPartTwoLines(): List<String> = loadFileLines("$fileNamePrefix-p2$fileExtension")
-
-    private fun loadFileLines(fileName: String): List<String> = classLoader.getResource(fileName)?.readText()?.split("\n")
+    val lines: List<String> = this::class.java.classLoader.getResource(fileName)?.readText()?.split("\n")
         ?: throw IllegalArgumentException("Unable to locate the fucking file! It should be in the resources folder, titled: [$fileName]")
 }
