@@ -30,22 +30,28 @@ class ParserTest {
 
     @Test
     fun testLoadSampleFile() {
-        // Targets sample file in test resources directory: advent-unit-test-files/2018-05.txt
-        val lines = AdventFileParser(year = 2018, day = 5, targetDirectory = "advent-unit-test-files").lines
+        // Targets sample file in test resources directory: advent-unit-test-files/2018-05-p1.txt
+        val parser = AdventFileParser(year = 2018, day = 5, targetDirectory = "advent-unit-test-files")
+        val partOneLines = parser.getPartOneLines()
         assertEquals(
             expected = "First Line",
-            actual = lines.firstOrNull(),
+            actual = partOneLines.firstOrNull(),
             message = "Expected the first line to be parsed properly",
         )
         assertEquals(
             expected = "Second Line",
-            actual = lines.secondOrNull(),
+            actual = partOneLines.secondOrNull(),
             message = "Expected the second line to be parsed properly",
         )
         assertEquals(
             expected = "Fuck You",
-            actual = lines.thirdOrNull(),
+            actual = partOneLines.thirdOrNull(),
             message = "Expected the third line to be parsed properly",
+        )
+        assertEquals(
+            expected = "HELLOWORLD",
+            actual = parser.getPartTwoLines().joinToString(separator = ""),
+            message = "Expected all the lines of the second file to be that thing that all the programmers say when they're trying to learn a new thing",
         )
     }
 }

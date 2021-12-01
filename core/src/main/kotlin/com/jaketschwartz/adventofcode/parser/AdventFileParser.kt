@@ -1,5 +1,6 @@
 package com.jaketschwartz.adventofcode.parser
 
+import com.jaketschwartz.adventofcode.extensions.padSingleDigit
 import java.time.LocalDate
 
 /**
@@ -13,12 +14,18 @@ import java.time.LocalDate
  *
  * Remember kids, always pad your strings with zeroes at the front for added complexity when using numbers below 10.
  */
-class AdventFileParser(year: Int, day: Int, targetDirectory: String = DEFAULT_TARGET_DIRECTORY) {
+class AdventFileParser(
+    year: Int,
+    day: Int,
+    targetDirectory: String = DEFAULT_TARGET_DIRECTORY,
+    private val fileExtension: String = DEFAULT_FILE_EXTENSION,
+) {
     companion object {
         const val MIN_DAY_ALLOWED: Int = 1
         const val MAX_DAY_ALLOWED: Int = 25
         const val MIN_YEAR_ALLOWED: Int = 2015
         const val DEFAULT_TARGET_DIRECTORY: String = "advent-day-files"
+        const val DEFAULT_FILE_EXTENSION: String = ".txt"
     }
 
     init {
@@ -26,9 +33,12 @@ class AdventFileParser(year: Int, day: Int, targetDirectory: String = DEFAULT_TA
         check(day in MIN_DAY_ALLOWED..MAX_DAY_ALLOWED) { "Advent of Code only runs from the first of the month until Christmas... Get it together" }
     }
 
-    private val fileName = "$targetDirectory/$year-${day.toString().padStart(length = 2, padChar = '0')}.txt"
+    private val classLoader: ClassLoader = this::class.java.classLoader
+    private val fileNamePrefix = "$targetDirectory/$year-${day.padSingleDigit()}"
 
-    // The target output from this class.  Use this to start the challenge!
-    val lines: List<String> = this::class.java.classLoader.getResource(fileName)?.readText()?.split("\n")
+    fun getPartOneLines(): List<String> = loadFileLines("$fileNamePrefix-p1$fileExtension")
+    fun getPartTwoLines(): List<String> = loadFileLines("$fileNamePrefix-p2$fileExtension")
+
+    private fun loadFileLines(fileName: String): List<String> = classLoader.getResource(fileName)?.readText()?.split("\n")
         ?: throw IllegalArgumentException("Unable to locate the fucking file! It should be in the resources folder, titled: [$fileName]")
 }
