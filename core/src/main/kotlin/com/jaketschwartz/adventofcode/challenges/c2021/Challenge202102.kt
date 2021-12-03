@@ -8,7 +8,6 @@ class Challenge202102 : Challenge {
     override val challengeName: String = "Depth Movement"
 
     override fun partOne(lines: List<String>): String = lines
-        .filterNot { it.isBlank() }
         .fold(PositionStats()) { positionStats, currentLine ->
             currentLine.split(" ").let { (directive, value) ->
                 positionStats.copy(
@@ -25,7 +24,6 @@ class Challenge202102 : Challenge {
         .toString()
 
     override fun partTwo(lines: List<String>): String = lines
-        .filterNot { it.isBlank() }
         .fold(PositionStatsV2()) { positionStats, currentLine ->
             val (directive, value) = currentLine.split(" ").let { (directive, value) -> directive to value.toInt() }
             when(directive) {

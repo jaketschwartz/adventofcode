@@ -35,6 +35,6 @@ class AdventFileParser(
 
     private val fileName = "$targetDirectory/$year-${day.padSingleDigit()}$fileExtension"
 
-    val lines: List<String> = this::class.java.classLoader.getResource(fileName)?.readText()?.split("\n")
+    val lines: List<String> = this::class.java.classLoader.getResource(fileName)?.readText(Charsets.UTF_8)?.split("\n")
         ?: throw IllegalArgumentException("Unable to locate the fucking file! It should be in the resources folder, titled: [$fileName]")
 }

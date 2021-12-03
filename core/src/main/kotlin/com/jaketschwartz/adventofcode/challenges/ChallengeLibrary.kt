@@ -14,7 +14,7 @@ object ChallengeLibrary {
 
     fun executeChallenge(year: Int, day: Int, executionType: ChallengeExecutionType) {
         val challenge = challengeMap[ChallengeKey(year, day)]
-            ?: throw IllegalStateException("The challenge for $year/$${day.padSingleDigit()} has not yet been coded")
+            ?: throw IllegalStateException("The challenge for $year/${day.padSingleDigit()} has not yet been coded")
 
         val firstResult = { logger.info("Result for the first challenge for ${challenge.challengeName}: ${challenge.partOne(challenge.parser.lines)}") }
         val secondResult = { logger.info("Result for the second challenge for ${challenge.challengeName}: ${challenge.partTwo(challenge.parser.lines)}") }
