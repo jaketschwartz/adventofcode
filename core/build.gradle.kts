@@ -1,6 +1,6 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    id(Plugins.kotlin) version Versions.kotlin
     application
 }
 
@@ -10,12 +10,12 @@ repositories {
 
 dependencies {
     // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.reflections:reflections:0.10.2")
+    implementation(platform(Dependencies.kotlinBom))
+    implementation(Dependencies.kotlinStdlib)
+    implementation(Dependencies.reflections)
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation(TestDependencies.kotlinTest)
+    testImplementation(TestDependencies.kotlinTestJUnit)
 }
 
 application {
