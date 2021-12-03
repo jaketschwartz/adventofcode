@@ -1,8 +1,9 @@
 package com.jaketschwartz.adventofcode.challenges
 
 import com.jaketschwartz.adventofcode.parser.AdventFileParser
+import com.jaketschwartz.adventofcode.util.ArgumentlessConstructorPromise
 
-interface Challenge {
+interface Challenge : ArgumentlessConstructorPromise {
     val year: Int
     val day: Int
 

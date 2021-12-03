@@ -9,9 +9,15 @@ repositories {
 }
 
 dependencies {
-    // Align versions of all Kotlin components
+    // Kotlin
     implementation(platform(Dependencies.kotlinBom))
     implementation(Dependencies.kotlinStdlib)
+
+    // Logging
+    implementation(Dependencies.logbackClassic)
+    implementation(Dependencies.kotlinLogging)
+
+    // Util
     implementation(Dependencies.reflections)
 
     testImplementation(TestDependencies.kotlinTest)

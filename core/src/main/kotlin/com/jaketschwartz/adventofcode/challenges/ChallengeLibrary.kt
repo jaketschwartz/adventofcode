@@ -1,23 +1,14 @@
 package com.jaketschwartz.adventofcode.challenges
 
 import com.jaketschwartz.adventofcode.extensions.padSingleDigit
-import org.reflections.Reflections
+import com.jaketschwartz.adventofcode.util.AdventTypeLoader
+import mu.KotlinLogging
 
 object ChallengeLibrary {
-    // TODO: maybe scan the classpath for all challenges that are coded and just automagically add them.  Maybe with annotation scanning?
+    private val logger = KotlinLogging.logger {}
+
     private val challengeMap: Map<ChallengeKey, Challenge> by lazy {
-        Reflections(Challenge::class.java.packageName)
-            .getSubTypesOf(Challenge::class.java)
-            .mapNotNull { clazz ->
-                try {
-                    clazz.declaredConstructors.singleOrNull()?.newInstance() as? Challenge
-                } catch(e: Exception) {
-                    println("Failed to instantiate a new instance of [${clazz.simpleName}]")
-                    null
-                }?.also {
-                    println("Successfully loaded challenge [${it::class.qualifiedName} / ${it.challengeName}]")
-                }
-            }
+        AdventTypeLoader.initializeAllImplementationsOfType<Challenge>()
             .associateBy { challenge -> ChallengeKey(year = challenge.year, day = challenge.day) }
     }
 
@@ -25,8 +16,8 @@ object ChallengeLibrary {
         val challenge = challengeMap[ChallengeKey(year, day)]
             ?: throw IllegalStateException("The challenge for $year/$${day.padSingleDigit()} has not yet been coded")
 
-        val firstResult = { println("Result for the first challenge for ${challenge.challengeName}: ${challenge.partOne(challenge.parser.lines)}") }
-        val secondResult = { println("Result for the second challenge for ${challenge.challengeName}: ${challenge.partTwo(challenge.parser.lines)}") }
+        val firstResult = { logger.info("Result for the first challenge for ${challenge.challengeName}: ${challenge.partOne(challenge.parser.lines)}") }
+        val secondResult = { logger.info("Result for the second challenge for ${challenge.challengeName}: ${challenge.partTwo(challenge.parser.lines)}") }
         when (executionType) {
             ChallengeExecutionType.FIRST -> firstResult()
             ChallengeExecutionType.SECOND -> secondResult()
