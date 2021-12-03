@@ -1,15 +1,25 @@
 package com.jaketschwartz.adventofcode.challenges
 
-import com.jaketschwartz.adventofcode.challenges.c2021.Challenge202101
-import com.jaketschwartz.adventofcode.challenges.c2021.Challenge202102
 import com.jaketschwartz.adventofcode.extensions.padSingleDigit
+import org.reflections.Reflections
 
 object ChallengeLibrary {
     // TODO: maybe scan the classpath for all challenges that are coded and just automagically add them.  Maybe with annotation scanning?
-    private val challengeMap: Map<ChallengeKey, Challenge> = mapOf(
-        2021 day 1 to Challenge202101(),
-        2021 day 2 to Challenge202102(),
-    )
+    private val challengeMap: Map<ChallengeKey, Challenge> by lazy {
+        Reflections(Challenge::class.java.packageName)
+            .getSubTypesOf(Challenge::class.java)
+            .mapNotNull { clazz ->
+                try {
+                    clazz.declaredConstructors.singleOrNull()?.newInstance() as? Challenge
+                } catch(e: Exception) {
+                    println("Failed to instantiate a new instance of [${clazz.simpleName}]")
+                    null
+                }?.also {
+                    println("Successfully loaded challenge [${it::class.qualifiedName} / ${it.challengeName}]")
+                }
+            }
+            .associateBy { challenge -> ChallengeKey(year = challenge.year, day = challenge.day) }
+    }
 
     fun executeChallenge(year: Int, day: Int, executionType: ChallengeExecutionType) {
         val challenge = challengeMap[ChallengeKey(year, day)]
