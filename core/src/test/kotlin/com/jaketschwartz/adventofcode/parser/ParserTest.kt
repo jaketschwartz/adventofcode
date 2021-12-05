@@ -2,7 +2,7 @@ package com.jaketschwartz.adventofcode.parser
 
 import com.jaketschwartz.adventofcode.extensions.secondOrNull
 import com.jaketschwartz.adventofcode.extensions.thirdOrNull
-import com.jaketschwartz.adventofcode.parser.util.testhelper.AdventTestHelpers.assertSucceeds
+import com.jaketschwartz.adventofcode.testhelper.AdventTestHelpers.assertSucceeds
 import org.junit.Test
 import java.time.LocalDate
 import kotlin.test.assertEquals

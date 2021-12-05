@@ -1,4 +1,4 @@
-package com.jaketschwartz.adventofcode.parser.util.testhelper
+package com.jaketschwartz.adventofcode.testhelper
 
 import kotlin.test.fail
 
