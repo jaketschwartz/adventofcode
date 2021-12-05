@@ -11,3 +11,5 @@ fun <T: Any> List<T>.fourth(): T = this[3]
 fun <T: Any> List<T>.fourthOrNull(): T? = this.getOrNull(3)
 fun <T: Any> List<T>.fifth(): T = this[4]
 fun <T: Any> List<T>.fifthOrNull(): T? = this.getOrNull(4)
+
+fun <T: Any, U: Any> Map<T, U>.getOrThrow(key: T): U = get(key).checkNotNull { "Expected a key of [$key] to exist" }
