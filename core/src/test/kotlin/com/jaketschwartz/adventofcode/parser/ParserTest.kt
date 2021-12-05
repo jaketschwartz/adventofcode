@@ -2,6 +2,7 @@ package com.jaketschwartz.adventofcode.parser
 
 import com.jaketschwartz.adventofcode.extensions.secondOrNull
 import com.jaketschwartz.adventofcode.extensions.thirdOrNull
+import com.jaketschwartz.adventofcode.parser.util.testhelper.AdventTestHelpers.assertSucceeds
 import org.junit.Test
 import java.time.LocalDate
 import kotlin.test.assertEquals
@@ -29,9 +30,16 @@ class ParserTest {
     }
 
     @Test
-    fun testLoadSampleFile() {
-        // Targets sample file in test resources directory: advent-unit-test-files/2018-05.txt
-        val lines = AdventFileParser(year = 2018, day = 5, targetDirectory = "advent-unit-test-files").lines
+    fun testLoadLiveFile() {
+        // Targets live file in test resources directory: advent-unit-test-files/2018-05.txt
+        val parser = AdventFileParser(year = 2018, day = 5, targetDirectory = "advent-unit-test-files")
+        assertFails("No sample file exists for this given day, so an exception should be thrown upon access") { parser.sampleLines }
+        val lines = assertSucceeds("The lines should properly be loaded because the file exists") { parser.lines }
+        assertEquals(
+            expected = 3,
+            actual = lines.size,
+            message = "Expected there to be three lines in the fake live file"
+        )
         assertEquals(
             expected = "First Line",
             actual = lines.firstOrNull(),
@@ -46,6 +54,34 @@ class ParserTest {
             expected = "Fuck You",
             actual = lines.thirdOrNull(),
             message = "Expected the third line to be parsed properly",
+        )
+    }
+
+    @Test
+    fun testLoadSampleFile() {
+        // Targets live file in test resources directory: advent-unit-test-files/2018-05.txt
+        val parser = AdventFileParser(year = 2018, day = 7, targetDirectory = "advent-unit-test-files")
+        assertFails("No live file exists for this given day, so an exception should be thrown upon access") { parser.lines }
+        val sampleLines = assertSucceeds("The sample lines should properly be loaded because the file exists") { parser.sampleLines }
+        assertEquals(
+            expected = 3,
+            actual = sampleLines.size,
+            message = "Expected three lines to be loaded from the sample file",
+        )
+        assertEquals(
+            expected = "sample",
+            actual = sampleLines.firstOrNull(),
+            message = "Expected the first line to be properly parsed",
+        )
+        assertEquals(
+            expected = "file",
+            actual = sampleLines.secondOrNull(),
+            message = "Expected the second line to be properly parsed",
+        )
+        assertEquals(
+            expected = "lol",
+            actual = sampleLines.thirdOrNull(),
+            message = "Expected the third line to be properly parsed",
         )
     }
 }

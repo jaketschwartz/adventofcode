@@ -12,6 +12,9 @@ import java.time.LocalDate
  * A challenge on December 7th, 2023 would be in a directory and named as such:
  * advent-day-files/2023-07.txt.
  *
+ * Sample files can also be loaded.  Simply use the same name, but also add "-sample" at the end of the name. Ex:
+ * advent-day-files/2023-07-sample.txt
+ *
  * Remember kids, always pad your strings with zeroes at the front for added complexity when using numbers below 10.
  */
 class AdventFileParser(
@@ -33,8 +36,13 @@ class AdventFileParser(
         check(day in MIN_DAY_ALLOWED..MAX_DAY_ALLOWED) { "Advent of Code only runs from the first of the month until Christmas... Get it together" }
     }
 
-    private val fileName = "$targetDirectory/$year-${day.padSingleDigit()}$fileExtension"
+    private val fileNamePrefix = "$targetDirectory/$year-${day.padSingleDigit()}"
+    private val classLoader = this::class.java.classLoader
 
-    val lines: List<String> = this::class.java.classLoader.getResource(fileName)?.readText(Charsets.UTF_8)?.split("\n")
+    val lines: List<String> by lazy { readLines("$fileNamePrefix$fileExtension") }
+
+    val sampleLines: List<String> by lazy { readLines("$fileNamePrefix-sample$fileExtension") }
+
+    private fun readLines(fileName: String): List<String> = classLoader.getResource(fileName)?.readText(Charsets.UTF_8)?.split("\n")
         ?: throw IllegalArgumentException("Unable to locate the fucking file! It should be in the resources folder, titled: [$fileName]")
 }

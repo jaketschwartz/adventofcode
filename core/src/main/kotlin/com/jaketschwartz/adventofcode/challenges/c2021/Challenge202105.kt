@@ -1,6 +1,7 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
 import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.extensions.chainedTo
 import com.jaketschwartz.adventofcode.extensions.getOrThrow
 
 class Challenge202105 : Challenge {
@@ -25,21 +26,23 @@ class Challenge202105 : Challenge {
 
     private data class Line(val startCoord: Coordinate, val endCoord: Coordinate) {
         val isStraight: Boolean by lazy { startCoord.x == endCoord.x || startCoord.y == endCoord.y }
-        val xRange: IntRange by lazy { startCoord.x.coerceAtMost(endCoord.x).rangeTo(endCoord.x.coerceAtLeast(startCoord.x)) }
-        val yRange: IntRange by lazy { startCoord.y.coerceAtMost(endCoord.y).rangeTo(endCoord.y.coerceAtLeast(startCoord.y)) }
+        val xRange: IntProgression by lazy { getProgression(startCoord, endCoord) { it.x } }
+        val yRange: IntProgression by lazy { getProgression(startCoord, endCoord) { it.y } }
         val expanded: List<Coordinate> by lazy {
-            // Only straight lines can use this strategy - diagonal lines passed into this will create a rectangle from their points using this shit
             if (isStraight) {
                 xRange.flatMap { x -> yRange.map { y -> Coordinate(x, y) } }
             } else {
-                // Otherwise, use the int progressions which detail the real advancement between the coordinates and zip
-                // them to create the proper point plots in the correct order
-                xRange.reverseIfNecessary(startCoord.x)
-                    .zip(yRange.reverseIfNecessary(startCoord.y)) { x, y -> Coordinate(x, y) }
+                xRange.zip(yRange, ::Coordinate)
             }
         }
 
-        private fun IntRange.reverseIfNecessary(startCoordValue: Int): IntProgression = if (first != startCoordValue) reversed() else this
+        private fun getProgression(
+            start: Coordinate,
+            end: Coordinate,
+            extractor: (Coordinate) -> Int
+        ): IntProgression = extractor(start).chainedTo(extractor(end)) { derivedStart, derivedEnd ->
+            if (derivedStart > derivedEnd) derivedStart downTo derivedEnd else derivedStart..derivedEnd
+        }
 
         companion object {
             fun fromString(input: String): Line = input.split(" -> ").let { (start, end) ->
@@ -47,8 +50,7 @@ class Challenge202105 : Challenge {
             }
 
             private fun String.pointsToCoordinate(): Coordinate = split(",")
-                .map { it.toInt() }
-                .let { (x, y) -> Coordinate(x, y) }
+                .let { (x, y) -> Coordinate(x.toInt(), y.toInt()) }
         }
     }
 }
