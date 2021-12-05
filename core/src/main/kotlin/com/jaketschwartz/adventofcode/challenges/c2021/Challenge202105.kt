@@ -2,25 +2,15 @@ package com.jaketschwartz.adventofcode.challenges.c2021
 
 import com.jaketschwartz.adventofcode.challenges.Challenge
 import com.jaketschwartz.adventofcode.extensions.chainedTo
-import com.jaketschwartz.adventofcode.extensions.getOrThrow
 
 class Challenge202105 : Challenge {
     override val day: Int = 5
     override val year: Int = 2021
     override val challengeName: String = "Hydrothermal Venture"
 
-    override fun partOne(lines: List<String>): Any = lines
-        .map(Line::fromString)
-        .filter { it.isStraight }
-        .flatMap { it.expanded }
-        .groupBy { it }
-        .let { coordinateMap -> coordinateMap.keys.count { key -> coordinateMap.getOrThrow(key).size > 1 } }
+    override fun partOne(lines: List<String>): Any = lines.map(Line::fromString).filter { it.isStraight }.intersectionsCount()
 
-    override fun partTwo(lines: List<String>): Any = lines
-        .map(Line::fromString)
-        .flatMap { it.expanded }
-        .groupBy { it }
-        .let { coordinateMap -> coordinateMap.keys.count { key -> coordinateMap.getOrThrow(key).size > 1 } }
+    override fun partTwo(lines: List<String>): Any = lines.map(Line::fromString).intersectionsCount()
 
     private data class Coordinate(val x: Int, val y: Int)
 
@@ -53,4 +43,9 @@ class Challenge202105 : Challenge {
                 .let { (x, y) -> Coordinate(x.toInt(), y.toInt()) }
         }
     }
+
+    private fun Collection<Line>.intersectionsCount(): Int = this
+        .flatMap { it.expanded }
+        .groupBy { it }
+        .count { (_, value) -> value.size > 1 }
 }
