@@ -10,7 +10,7 @@ class Challenge202103 : Challenge {
     override val year: Int = 2021
     override val challengeName: String = "Binary Diagnostic"
 
-    override fun partOne(lines: List<String>): String = lines
+    override fun partOne(lines: List<String>): Int = lines
         .getIndexToValueMap()
         // Map the new column groups into partitions of 1s and 0s
         .map { (_, contents) -> contents.joinToString(separator = "") { it.value }.partition { it == '1' } }
@@ -22,9 +22,8 @@ class Challenge202103 : Challenge {
         // Because the first n values can be zeroes, we have to provide the standard line length to determine true bit length.
         // Kotlin's toInt(2) binary conversion ignores trailing zeroes in the bytes
         .let { gamma -> gamma * (gamma.bitwiseNegate(bitLength = lines.first().length)) }
-        .toString()
 
-    override fun partTwo(lines: List<String>): String = lines
+    override fun partTwo(lines: List<String>): Int = lines
         .getIndexToValueMap()
         .mapValues { (_, values) ->
             values.withIndex().map { (index, indexedValue) -> IndexedValue(index, indexedValue.value) }
@@ -34,7 +33,6 @@ class Challenge202103 : Challenge {
             val co2ScrubberRatingIndex = foldIntoOblivion(indexToValueMap, KeepType.LEAST_COMMON)
             lines[oxygenGeneratorRatingIndex].toInt(2) * lines[co2ScrubberRatingIndex].toInt(2)
         }
-        .toString()
 
     private fun List<String>.getIndexToValueMap(): IndexToValueMap = this
         // Split each line into a List<Char> for each 1 and 0

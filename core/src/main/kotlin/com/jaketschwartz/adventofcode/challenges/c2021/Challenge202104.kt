@@ -8,15 +8,13 @@ class Challenge202104 : Challenge {
     override val year: Int = 2021
     override val challengeName: String = "Giant Squid"
 
-    override fun partOne(lines: List<String>): String = BingoParameters.fromInput(lines)
+    override fun partOne(lines: List<String>): Int = BingoParameters.fromInput(lines)
         .processParametersAndDeclareWinner()
         .getScore()
-        .toString()
 
-    override fun partTwo(lines: List<String>): String = BingoParameters.fromInput(lines)
+    override fun partTwo(lines: List<String>): Int = BingoParameters.fromInput(lines)
         .processParametersAndDeclareLastWinner()
         .getScore()
-        .toString()
 
     private data class BingoParameters(
         val commands: List<Int>,

@@ -7,8 +7,8 @@ interface Challenge : ArgumentlessConstructorPromise {
     val year: Int
     val day: Int
 
-    fun partOne(lines: List<String>): String
-    fun partTwo(lines: List<String>): String
+    fun partOne(lines: List<String>): Any
+    fun partTwo(lines: List<String>): Any
 
     val challengeName: String get() = "$year/$day"
     val parser: AdventFileParser get() = AdventFileParser(year = year, day = day)

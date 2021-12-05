@@ -7,7 +7,7 @@ class Challenge202101 : Challenge {
     override val year: Int = 2021
     override val challengeName: String = "Sonar Distance"
 
-    override fun partOne(lines: List<String>): String = lines
+    override fun partOne(lines: List<String>): Int = lines
         .mapNotNull { it.toIntOrNull() }
         .fold(PreviousValueHolder(totalIncreases = 0, previousValue = Int.MAX_VALUE)) { valueHolder, newValue ->
             valueHolder.copy(
@@ -16,16 +16,14 @@ class Challenge202101 : Challenge {
             )
         }
         .totalIncreases
-        .toString()
 
-    override fun partTwo(lines: List<String>): String = lines
+    override fun partTwo(lines: List<String>): Long = lines
         .mapNotNull { it.toIntOrNull() }
         .let { distanceList ->
             distanceList.indices.sumOf { index: Int ->
                 if (distanceList.sumNextThree(index) < distanceList.sumNextThree(index + 1)) 1L else 0
             }
         }
-        .toString()
 
     private data class PreviousValueHolder(val totalIncreases: Int, val previousValue: Int)
 

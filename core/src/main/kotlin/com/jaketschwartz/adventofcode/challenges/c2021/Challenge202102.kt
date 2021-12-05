@@ -7,7 +7,7 @@ class Challenge202102 : Challenge {
     override val year: Int = 2021
     override val challengeName: String = "Depth Movement"
 
-    override fun partOne(lines: List<String>): String = lines
+    override fun partOne(lines: List<String>): Int = lines
         .fold(PositionStats()) { positionStats, currentLine ->
             currentLine.split(" ").let { (directive, value) ->
                 positionStats.copy(
@@ -21,9 +21,8 @@ class Challenge202102 : Challenge {
             }
         }
         .let { stats -> stats.depth * stats.horizontal }
-        .toString()
 
-    override fun partTwo(lines: List<String>): String = lines
+    override fun partTwo(lines: List<String>): Int = lines
         .fold(PositionStatsV2()) { positionStats, currentLine ->
             val (directive, value) = currentLine.split(" ").let { (directive, value) -> directive to value.toInt() }
             when(directive) {
@@ -40,7 +39,6 @@ class Challenge202102 : Challenge {
             }
         }
         .let { stats -> stats.horizontal * stats.depth }
-        .toString()
 
     private data class PositionStats(val horizontal: Int = 0, val depth: Int = 0)
 
