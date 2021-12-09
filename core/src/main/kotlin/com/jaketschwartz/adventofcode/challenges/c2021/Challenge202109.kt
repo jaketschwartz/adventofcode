@@ -20,11 +20,13 @@ class Challenge202109 : Challenge {
         splitFn = { it.chunked(1) },
         parseFn = { it.toInt() },
     ).let { matrix ->
-        val lowPoints = matrix.getLowPoints()
-        lowPoints.map { lowPoint ->
-
-        }
+        matrix.getLowPoints()
+            .map { lowPoint -> collectBasin(matrix, lowPoint).distinctBy { it.point } }
+            .map { it.size + 1 }
     }
+        .sortedDescending()
+        .take(3)
+        .reduce { total, nextValue -> total * nextValue }
 
     private fun collectBasin(
         matrix: AdventMatrix<Int>,
