@@ -13,3 +13,7 @@ fun <T: Any> KClass<T>.qualifiedNameNotNull(): String = this.qualifiedName
 fun <T: Any> T?.ifNull(block: () -> Unit): T? = this.also { if (this == null) block() }
 
 fun <T: Any, U: Any, V: Any> T.chainedTo(other: U, action: (T, U) -> V): V = action(this, other)
+
+fun <T: Any> T?.orDefault(block: () -> T): T = this ?: block()
+
+fun <T: Any> T?.orDefault(other: T): T = this ?: other
