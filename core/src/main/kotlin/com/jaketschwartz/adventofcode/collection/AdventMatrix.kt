@@ -3,22 +3,24 @@ package com.jaketschwartz.adventofcode.collection
 open class AdventMatrix<T: Any>(
     val matrixFields: List<List<T>>,
 ) {
-    val matrixPointMap: Map<AdventMatrixPoint, AdventMatrixPointValue<T>> = matrixFields
-        .flatMapIndexed { xIndex, yList ->
-            yList.mapIndexed { yIndex, value ->
-                AdventMatrixPointValue(
-                    point = AdventMatrixPoint(x = xIndex, y = yIndex),
-                    value = value,
-                )
-            }
-        }.associateBy { it.point }
-
     companion object {
         fun <T: Any> fromLines(
             lines: List<String>,
             splitFn: (String) -> List<String>,
             parseFn: (String) -> T
         ): AdventMatrix<T> = AdventMatrix(matrixFields = lines.map { line -> splitFn(line).map(parseFn) })
+    }
+
+    val matrixPointMap: Map<AdventPoint, AdventMatrixPoint<T>> by lazy {
+        matrixFields
+            .flatMapIndexed { xIndex, yList ->
+                yList.mapIndexed { yIndex, value ->
+                    AdventMatrixPoint(
+                        point = AdventPoint(x = xIndex, y = yIndex),
+                        value = value,
+                    )
+                }
+            }.associateBy { it.point }
     }
 
     val columns: List<List<T>> by lazy { rotate(RotationType.RIGHT).matrixFields }
@@ -39,9 +41,9 @@ open class AdventMatrix<T: Any>(
             }
     )
 
-    fun getPointOrNull(x: Int, y: Int): AdventMatrixPointValue<T>? = matrixPointMap[x pointTo y]
+    fun getPointOrNull(x: Int, y: Int): AdventMatrixPoint<T>? = matrixPointMap[x pointTo y]
 
-    fun getAdjacentHorizontalPoints(x: Int, y: Int): List<AdventMatrixPointValue<T>> = listOfNotNull(
+    fun getAdjacentCardinalPoints(x: Int, y: Int): List<AdventMatrixPoint<T>> = listOfNotNull(
         // Above
         getPointOrNull(x - 1, y),
         // Left
@@ -52,8 +54,8 @@ open class AdventMatrix<T: Any>(
         getPointOrNull(x, y + 1),
     )
 
-    fun getAdjacentHorizontalPoints(point: AdventMatrixPoint): List<AdventMatrixPointValue<T>> = getAdjacentHorizontalPoints(x = point.x, y = point.y)
-    fun getAdjacentHorizontalPoints(pointValue: AdventMatrixPointValue<T>): List<AdventMatrixPointValue<T>> = getAdjacentHorizontalPoints(pointValue.point)
+    fun getAdjacentCardinalPoints(point: AdventPoint): List<AdventMatrixPoint<T>> = getAdjacentCardinalPoints(x = point.x, y = point.y)
+    fun getAdjacentCardinalPoints(pointValue: AdventMatrixPoint<T>): List<AdventMatrixPoint<T>> = getAdjacentCardinalPoints(pointValue.point)
 
     enum class RotationType {
         RIGHT,
@@ -61,14 +63,7 @@ open class AdventMatrix<T: Any>(
     }
 }
 
-data class AdventMatrixPointValue<T: Any>(
-    val point: AdventMatrixPoint,
+data class AdventMatrixPoint<T: Any>(
+    val point: AdventPoint,
     val value: T,
 )
-
-data class AdventMatrixPoint(
-    val x: Int,
-    val y: Int,
-)
-
-infix fun Int.pointTo(y: Int): AdventMatrixPoint = AdventMatrixPoint(this, y)

@@ -2,7 +2,7 @@ package com.jaketschwartz.adventofcode.challenges.c2021
 
 import com.jaketschwartz.adventofcode.challenges.Challenge
 import com.jaketschwartz.adventofcode.collection.AdventMatrix
-import com.jaketschwartz.adventofcode.collection.AdventMatrixPointValue
+import com.jaketschwartz.adventofcode.collection.AdventMatrixPoint
 
 class Challenge202109 : Challenge {
     override val day: Int = 9
@@ -30,8 +30,8 @@ class Challenge202109 : Challenge {
 
     private fun collectBasin(
         matrix: AdventMatrix<Int>,
-        currentPoint: AdventMatrixPointValue<Int>,
-    ): List<AdventMatrixPointValue<Int>> = matrix.getAdjacentHorizontalPoints(currentPoint).filter {
+        currentPoint: AdventMatrixPoint<Int>,
+    ): List<AdventMatrixPoint<Int>> = matrix.getAdjacentCardinalPoints(currentPoint).filter {
         it.value > currentPoint.value && it.value < 9
     }.let { validPoints ->
         validPoints + validPoints.flatMap { validPoint ->
@@ -42,8 +42,8 @@ class Challenge202109 : Challenge {
         }
     }
 
-    private fun AdventMatrix<Int>.getLowPoints(): List<AdventMatrixPointValue<Int>> = this.matrixPointMap.values.filter { matrixPoint ->
-        this.getAdjacentHorizontalPoints(matrixPoint.point.x, matrixPoint.point.y).all {
+    private fun AdventMatrix<Int>.getLowPoints(): List<AdventMatrixPoint<Int>> = this.matrixPointMap.values.filter { matrixPoint ->
+        this.getAdjacentCardinalPoints(matrixPoint.point.x, matrixPoint.point.y).all {
             it.value > matrixPoint.value
         }
     }
