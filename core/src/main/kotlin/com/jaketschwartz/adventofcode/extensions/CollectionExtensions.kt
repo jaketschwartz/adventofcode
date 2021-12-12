@@ -22,3 +22,6 @@ fun <T: Any> Array<T>.fifth(): T = this[4]
 fun <T: Any> Array<T>.fifthOrNull(): T? = this.getOrNull(4)
 
 fun <T: Any, U: Any> Map<T, U>.getOrThrow(key: T): U = get(key).checkNotNull { "Expected a key of [$key] to exist" }
+
+fun <T: Any, U: Comparable<U>> Collection<T>.minByOrThrow(selector: (T) -> U): T = minByOrNull(selector).checkNotNull { "Collection contained no elements" }
+fun <T: Any, U: Comparable<U>> Collection<T>.maxByOrThrow(selector: (T) -> U): T = maxByOrNull(selector).checkNotNull { "Collection contained no elements" }
