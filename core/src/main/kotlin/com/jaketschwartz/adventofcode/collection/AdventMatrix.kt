@@ -54,8 +54,33 @@ open class AdventMatrix<T: Any>(
         getPointOrNull(x, y + 1),
     )
 
+    fun getAdjacentPoints(x: Int, y: Int): List<AdventMatrixPoint<T>> = listOfNotNull(
+        // Top-left
+        getPointOrNull(x - 1, y - 1),
+        // Above
+        getPointOrNull(x, y - 1),
+        // Top-right
+        getPointOrNull(x + 1, y - 1),
+        // Left
+        getPointOrNull(x - 1, y),
+        // Right
+        getPointOrNull(x + 1, y),
+        // Bottom-left
+        getPointOrNull(x - 1, y + 1),
+        // Below
+        getPointOrNull(x, y + 1),
+        // Bottom-right
+        getPointOrNull(x + 1, y + 1),
+    )
+
     fun getAdjacentCardinalPoints(point: AdventPoint): List<AdventMatrixPoint<T>> = getAdjacentCardinalPoints(x = point.x, y = point.y)
     fun getAdjacentCardinalPoints(pointValue: AdventMatrixPoint<T>): List<AdventMatrixPoint<T>> = getAdjacentCardinalPoints(pointValue.point)
+
+    fun mapValues(valueTransform: (T) -> T): AdventMatrix<T> = AdventMatrix(
+        matrixFields = matrixFields.map { fieldRow ->
+            fieldRow.map { valueTransform(it) }
+        }
+    )
 
     enum class RotationType {
         RIGHT,
