@@ -19,7 +19,7 @@ class Challenge202113 : Challenge {
 
     private data class Dot(var x: Int, var y: Int, val uuid: UUID = UUID.randomUUID())
 
-    enum class FoldType {
+    private enum class FoldType {
         X, Y;
         companion object {
             fun fromString(string: String): FoldType = when (string) {
