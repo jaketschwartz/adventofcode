@@ -1,9 +1,9 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
-import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.challenges.AdventChallenge
 import java.util.*
 
-class Challenge202113 : Challenge {
+class Challenge202113 : AdventChallenge {
     override val day: Int = 13
     override val year: Int = 2021
     override val challengeName: String = "Transparent Origami"

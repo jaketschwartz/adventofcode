@@ -3,7 +3,7 @@ package com.jaketschwartz.adventofcode.challenges
 import com.jaketschwartz.adventofcode.parser.AdventFileParser
 import com.jaketschwartz.adventofcode.util.ArgumentlessConstructorPromise
 
-interface Challenge : ArgumentlessConstructorPromise {
+interface AdventChallenge : ArgumentlessConstructorPromise {
     val year: Int
     val day: Int
 

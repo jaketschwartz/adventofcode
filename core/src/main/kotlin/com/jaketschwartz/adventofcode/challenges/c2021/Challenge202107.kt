@@ -1,10 +1,10 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
-import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.challenges.AdventChallenge
 import com.jaketschwartz.adventofcode.extensions.checkNotNull
 import kotlin.math.absoluteValue
 
-class Challenge202107 : Challenge {
+class Challenge202107 : AdventChallenge {
     override val day: Int = 7
     override val year: Int = 2021
     override val challengeName: String = "The Treachery of Whales"

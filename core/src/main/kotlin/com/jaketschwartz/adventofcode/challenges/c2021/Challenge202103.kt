@@ -1,11 +1,11 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
-import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.challenges.AdventChallenge
 import com.jaketschwartz.adventofcode.extensions.bitwiseNegate
 
 typealias IndexToValueMap = Map<Int, List<IndexedValue<String>>>
 
-class Challenge202103 : Challenge {
+class Challenge202103 : AdventChallenge {
     override val day: Int = 3
     override val year: Int = 2021
     override val challengeName: String = "Binary Diagnostic"

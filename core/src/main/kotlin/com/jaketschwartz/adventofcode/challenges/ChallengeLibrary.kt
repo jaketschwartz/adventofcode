@@ -7,8 +7,8 @@ import mu.KotlinLogging
 object ChallengeLibrary {
     private val logger = KotlinLogging.logger {}
 
-    private val challengeMap: Map<ChallengeKey, Challenge> by lazy {
-        AdventTypeLoader.initializeAllImplementationsOfType<Challenge>()
+    private val challengeMap: Map<ChallengeKey, AdventChallenge> by lazy {
+        AdventTypeLoader.initializeAllImplementationsOfType<AdventChallenge>()
             .associateBy { challenge -> ChallengeKey(year = challenge.year, day = challenge.day) }
     }
 

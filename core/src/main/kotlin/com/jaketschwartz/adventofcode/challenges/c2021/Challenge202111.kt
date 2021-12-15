@@ -1,10 +1,10 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
-import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.challenges.AdventChallenge
 import com.jaketschwartz.adventofcode.collection.AdventMatrix
 import com.jaketschwartz.adventofcode.collection.AdventMatrixPoint
 
-class Challenge202111 : Challenge {
+class Challenge202111 : AdventChallenge {
     override val day: Int = 11
     override val year: Int = 2021
     override val challengeName: String = "Dumbo Octopus"

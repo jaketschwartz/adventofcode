@@ -1,9 +1,9 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
-import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.challenges.AdventChallenge
 import com.jaketschwartz.adventofcode.extensions.*
 
-class Challenge202104 : Challenge {
+class Challenge202104 : AdventChallenge {
     override val day: Int = 4
     override val year: Int = 2021
     override val challengeName: String = "Giant Squid"

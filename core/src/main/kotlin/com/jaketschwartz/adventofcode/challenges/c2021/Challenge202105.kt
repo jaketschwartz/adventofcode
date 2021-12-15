@@ -1,9 +1,9 @@
 package com.jaketschwartz.adventofcode.challenges.c2021
 
-import com.jaketschwartz.adventofcode.challenges.Challenge
+import com.jaketschwartz.adventofcode.challenges.AdventChallenge
 import com.jaketschwartz.adventofcode.extensions.chainedTo
 
-class Challenge202105 : Challenge {
+class Challenge202105 : AdventChallenge {
     override val day: Int = 5
     override val year: Int = 2021
     override val challengeName: String = "Hydrothermal Venture"
